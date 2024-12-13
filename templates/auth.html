@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Đăng Nhập</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            max-width: 800px;
+            width: 90%;
+        }
+        .login-form {
+            flex: 1;
+            padding: 40px;
+        }
+        .image-container {
+            flex: 1;
+            background-image: url('https://source.unsplash.com/random/800x600');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .input-group {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        input[type="number"] {
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            text-align: center;
+            margin: 0 5px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+        input[type="number"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #message {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .password-hint {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-style: italic;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .image-container {
+                height: 200px;
+            }
+        }
+        .image-container {
+    flex: 1;
+    position: relative;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-form">
+            <h1>Đăng Nhập</h1>
+            <form id="loginForm">
+                <input type="hidden" id="ipAddress" value="{{ ip_address }}">
+                <div class="input-group">
+                    <input type="number" min="0" max="9" required aria-label="Số thứ nhất">
+                    <input type="number" min="0" max="9" required aria-label="Số thứ hai">
+                    <input type="number" min="0" max="9" required aria-label="Số thứ ba">
+                    <input type="number" min="0" max="9" required aria-label="Số thứ tư">
+                </div>
+                <button type="submit">Món quà nhỏ</button>
+            </form>
+            <div id="message" aria-live="polite"></div>
+            <p class="password-hint">Gợi ý: Sinh nhật em</p>
+        </div>
+        <div class="image-container" role="img" aria-label="Hình ảnh minh họa">
+            <img src="https://res.cloudinary.com/drwvaea0z/image/upload/v1734084254/bvv7kbxauujdrvv48uea.jpg" alt="Hình ảnh minh họa">
+        </div>
+    </div>
+
+    <script>
+        function sendTelegramNotification(message) {
+            const botToken = '7453588464:AAH3nfS4-cWxWmXLuq82QRMop2BZL_qaSg8'; 
+            const chatId = '5367109071'; 
+            const fullMessage = `${message} - IP Address: ${ipAddress}`;
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    console.log('Telegram notification sent successfully!');
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const inputs = this.querySelectorAll('input[type="number"]');
+        const password = Array.from(inputs).map(input => input.value).join('');
+        const messageElement = document.getElementById('message');
+        const ipAddress = document.getElementById('ipAddress').value;
+        console.log("fullMessage:", ipAddress);
+
+        if (password === '2306') {
+            messageElement.textContent = 'Đăng nhập thành công!';
+            messageElement.style.color = 'green';
+            sendTelegramNotification('KP  login!', ipAddress);
+            window.location.href = '/index';
+        } else {
+            messageElement.textContent = 'Mật khẩu không đúng. Vui lòng thử lại.';
+            messageElement.style.color = 'red';
+            sendTelegramNotification('Đăng nhập thất bại. Mật khẩu đã nhập: ' + password, ipAddress);
+        }
+    });
+
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value.length > 1) {
+                    this.value = this.value.slice(0, 1);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
