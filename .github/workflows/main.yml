@@ -37,8 +37,7 @@ jobs:
         with:
           # Upload the 'templates' directory and other necessary files
           path: |
-            templates
-            static 
+            templates static 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
