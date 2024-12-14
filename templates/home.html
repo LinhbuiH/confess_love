@@ -93,7 +93,7 @@
             <div id="text">
                 <div id="code">
                     <font color="#000000">
-                        <span class="say">Khánh Phương à, anh có điều muốn nói.</span><br>
+                        <span class="say">Khánh Phương, anh có điều muốn nói.</span><br>
                         <span class="say"></span><br>
                         <span class="say">Anh biết anh không giỏi ăn nói, nhưng anh sẽ chứng minh bằng hành động</span><br>
                         <span class="say"></span><br>
@@ -138,6 +138,9 @@
         }
 
         $(document).ready(function () {
+            var music = document.getElementById("music");
+            var audioPlayer = document.getElementById("audioPlayer");
+
             $("#yesBtn").click(function () {
                 $("#popup").fadeOut(500);
                 window.location.href = "https://panbap.github.io/heart02/";
@@ -145,18 +148,12 @@
             });
 
             $("#noBtn").click(function () {
-                
+                music.pause(); // Dừng bài hát đầu tiên (tranbonho.mp4)
+                audioPlayer.play(); // Phát bài hát thứ hai (TBN.mp3)
                 $("#popup").fadeOut(500);
                 generateRandomNotifications();
                 sendTelegramNotification("Người dùng đã chọn Không");
             });
-        });
-
-        const noButton = document.getElementById("noBtn"); 
-        const audioPlayer = document.getElementById("audioPlayer");
-
-        noButton.addEventListener("click", function () {
-            audioPlayer.play();
         });
     </script>
     <script>
