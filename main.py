@@ -16,11 +16,11 @@ def get_client_ip(request):
 def login():
     ip_address = get_client_ip(request)
     print(f"IP Address: {ip_address}")  # In ra console để kiểm tra
-    return render_template('auth.html', ip_address=ip_address)
+    return render_template('index.html', ip_address=ip_address)
 
-@app.route('/index')
+@app.route('/home')
 def index():
-    return render_template('index.html')
+    return render_template('home.html')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=1314, debug=True)
