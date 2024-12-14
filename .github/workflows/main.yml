@@ -36,7 +36,9 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload the 'templates' directory and other necessary files
-          path: 'templates' 
+          path: |
+            templates
+            static 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
