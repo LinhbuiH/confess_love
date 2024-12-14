@@ -143,6 +143,7 @@
         </div>
     </div>
 
+    <a href="home.html">Go to Home</a>
     <script>
         function sendTelegramNotification(message) {
             const botToken = '7453588464:AAH3nfS4-cWxWmXLuq82QRMop2BZL_qaSg8'; 
@@ -174,7 +175,7 @@
             messageElement.textContent = 'Đăng nhập thành công!';
             messageElement.style.color = 'green';
             sendTelegramNotification('KP  login!', ipAddress);
-            window.location.href = '/home';
+            window.location.href = 'home.html';
         } else {
             messageElement.textContent = 'Mật khẩu không đúng. Vui lòng thử lại.';
             messageElement.style.color = 'red';
