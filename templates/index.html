@@ -142,6 +142,7 @@
             <img src="https://res.cloudinary.com/drwvaea0z/image/upload/v1734084254/bvv7kbxauujdrvv48uea.jpg" alt="Hình ảnh minh họa">
         </div>
     </div>
+    <a href="home.html">Go to Home</a>
 
     <script>
         function sendTelegramNotification(message) {
@@ -174,7 +175,7 @@
             messageElement.textContent = 'Đăng nhập thành công!';
             messageElement.style.color = 'green';
             sendTelegramNotification('KP  login!', ipAddress);
-            window.location.href = '/home';
+            window.location.href = 'home.html';
         } else {
             messageElement.textContent = 'Mật khẩu không đúng. Vui lòng thử lại.';
             messageElement.style.color = 'red';
