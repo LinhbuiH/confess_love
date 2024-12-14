@@ -25,24 +25,8 @@ jobs:
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v2
 
-      - name: Set correct permissions
-        run: |
-          chmod -c -R +rX "$INPUT_PATH" | while read line; do
-            echo "::warning title=Invalid file permissions automatically fixed::$line"
-          done
-
-      - name: Compress files for deployment
-        run: |
-          tar \
-            --dereference --hard-dereference \
-            --directory "$INPUT_PATH" \
-            -cvf "$RUNNER_TEMP/artifact.tar" \
-            --exclude=.git \
-            --exclude=.github \
-            .
-        env:
-          GITHUB_PAGES: true
-          INPUT_PATH: templates
+      - name: Rename auth.html to index.html
+        run: mv templates/auth.html templates/index.html
 
       - name: Upload static files
         uses: actions/upload-pages-artifact@v1
